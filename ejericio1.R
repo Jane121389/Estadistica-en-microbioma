@@ -1,5 +1,3 @@
-setwd("/home/jane/Documentos/doctorado/estadistica y metagenomica")
-
 ##cargamos la tabla de abundancia
 abund_table = read.csv("ALSG93AGenus.csv",row.names=1, check.names=FALSE)
 abund_table_t<-t(abund_table)
@@ -80,7 +78,7 @@ s
 #[1] 0.05012
 
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012)
-df_P <-data.frame(2:10,power)
+df_P <-data.frame(n,power)
 df_P
 
 n = c(2, 3, 4, 5, 6, 7, 8, 9, 10)  
@@ -95,4 +93,17 @@ abline(h = 0.90, col="blue")
 
 
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
+
+
+#5.3 Power Analysis for Comparing Diversity Across More than Two Groups Using 
+#    ANOVA	
+df_H_G93WTm1N4 <- filter(df_H_G6,Group%in%c("G93m1","WTm1","G93m4","WTm4"))
+df_H_G93WTm1N4 
+
+fit = lm(formula = value~Group,data=df_H_G93WTm1N4)
+anova (fit)
+
+
+library(pwr)
+pwr.anova.test(f= 0.23,k=4,n=45:55,sig.level=0.05)
 
